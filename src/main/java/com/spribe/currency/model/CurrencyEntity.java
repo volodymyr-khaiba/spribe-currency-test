@@ -23,11 +23,6 @@ public class CurrencyEntity {
     @Column(name = "CREATION_DATE")
     private LocalDateTime creationDate;
 
-//    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-//    @JoinColumn(name = "currency_id")
-//    private List<ExchangeRate> exchangeRates;
-
-
     public Long getId() {
         return id;
     }

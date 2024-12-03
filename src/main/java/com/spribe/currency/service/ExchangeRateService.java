@@ -1,7 +1,6 @@
 package com.spribe.currency.service;
 
 import com.spribe.currency.dto.CurrencyRatePackDto;
-import com.spribe.currency.integration.FixerIoCurrencyRateProvider;
 import com.spribe.currency.model.ExchangeRateEntity;
 import com.spribe.currency.model.ExchangeRatePackEntity;
 import com.spribe.currency.persistance.ExchangeRatePackRepository;
@@ -29,7 +28,6 @@ public class ExchangeRateService {
     @Autowired
     ExchangeRateCache cache;
 
-    //todo replace string with currency?
     public Map<String, BigDecimal> getRatesForBase(String base) {
         return cache.getRates(base);
     }
@@ -40,7 +38,6 @@ public class ExchangeRateService {
 
     @Transactional
     public void saveRatesData(CurrencyRatePackDto ratePackDto) {
-
         ExchangeRatePackEntity exchangeRatePackEntity = new ExchangeRatePackEntity();
         exchangeRatePackEntity.setApiTimestamp(ratePackDto.getTimestamp());
         exchangeRatePackEntity.setBaseCurrencyCode(ratePackDto.getBase());
@@ -62,6 +59,5 @@ public class ExchangeRateService {
 
         log.info("Rates storing finished for base = {}", ratePackDto.getBase());
     }
-
 
 }

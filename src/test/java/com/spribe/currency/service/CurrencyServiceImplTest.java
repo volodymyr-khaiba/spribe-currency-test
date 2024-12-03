@@ -17,6 +17,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -24,6 +25,9 @@ public class CurrencyServiceImplTest {
 
     @Mock
     private CurrencyRepository currencyRepository;
+
+    @Mock
+    private ExchangeRateFetcherService fetcherService;
 
     @Mock
     private ObjectMapper objectMapper;
@@ -51,6 +55,7 @@ public class CurrencyServiceImplTest {
     @Test
     public void testCreateCurrency() {
         when(currencyRepository.save(any(CurrencyEntity.class))).thenReturn(currencyEntity);
+        doNothing().when(fetcherService).fetchAndStoreExchangeRatesForCurrency(any(String.class));
         when(objectMapper.convertValue(any(CurrencyEntity.class), any(Class.class))).thenReturn(currencyDto);
 
         CurrencyDto result = currencyService.createCurrency(currencyCreateDto);

@@ -21,7 +21,7 @@ public class CurrencyController {
         return ResponseEntity.ok(currencyService.listAllCurrencies());
     }
 
-    @PostMapping()
+    @PostMapping
     public ResponseEntity<CurrencyDto> createCurrency(@RequestBody CurrencyCreateDto currencyCreateDto) {
         CurrencyDto currency = currencyService.createCurrency(currencyCreateDto);
         return ResponseEntity.ok(currency);

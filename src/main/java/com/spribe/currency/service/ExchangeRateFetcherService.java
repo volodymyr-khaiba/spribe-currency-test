@@ -51,18 +51,21 @@ public class ExchangeRateFetcherService {
                 .map(pc -> pc.getProviderName())
                 .orElse(defaultProviderName);
         currencyDtos.stream().forEach(currencyDto -> {
-            CurrencyRatePackDto ratePack = ratesProvider.get(rateProvider).getCurrencyRates(currencyDto.getCode());
-            rateService.saveRatesData(ratePack);
+            fetchAndStoreExchangeRatesForCurrencyAndProvider(currencyDto.getCode(), rateProvider);
         });
         log.info("Process of exchange rates fetching finished");
     }
 
     public void fetchAndStoreExchangeRatesForCurrency(String currency) {
-        log.info("Exchange rate will be fetched for next currency = {}", currency);
         String rateProvider = providerConfigRepository.getLatestConfig()
                 .map(pc -> pc.getProviderName())
                 .orElse(defaultProviderName);
-        CurrencyRatePackDto ratePack = ratesProvider.get(rateProvider).getCurrencyRates(currency);
+        fetchAndStoreExchangeRatesForCurrencyAndProvider(currency, rateProvider);
+    }
+
+    private void fetchAndStoreExchangeRatesForCurrencyAndProvider(String currency, String provider) {
+        log.info("Exchange rate will be fetched for next currency = {}", currency);
+        CurrencyRatePackDto ratePack = ratesProvider.get(provider).getCurrencyRates(currency);
         rateService.saveRatesData(ratePack);
         log.info("Process of exchange rate fetching finished");
     }

@@ -7,6 +7,7 @@ import com.spribe.currency.model.CurrencyEntity;
 import com.spribe.currency.persistance.CurrencyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -20,6 +21,10 @@ public class CurrencyServiceImpl implements CurrencyService {
     private CurrencyRepository currencyRepository;
 
     @Autowired
+    @Lazy
+    ExchangeRateFetcherService fetcherService;
+
+    @Autowired
     private ObjectMapper objectMapper;
 
     public CurrencyDto createCurrency(CurrencyCreateDto currencyCreateDto) {
@@ -27,6 +32,7 @@ public class CurrencyServiceImpl implements CurrencyService {
         currency.setCode(currencyCreateDto.getCode());
         currency.setCreationDate(LocalDateTime.now());
         CurrencyEntity savedCurrency = currencyRepository.save(currency);
+        fetcherService.fetchAndStoreExchangeRatesForCurrency(currency.getCode());
         return mapToCurrencyDto(savedCurrency);
     }
 

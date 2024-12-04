@@ -1,0 +1,136 @@
+{
+	"info": {
+		"_postman_id": "6a812e83-0a4f-491b-a763-6f0ce8488e8a",
+		"name": "Currency collection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "20073159"
+	},
+	"item": [
+		{
+			"name": "get rates for currency",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"code\": \"USD\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/api/v1/exchange-rate/EUR/rates",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"exchange-rate",
+						"EUR",
+						"rates"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get all currencies",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/api/v1/currency/all",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"currency",
+						"all"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create currency",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"code\": \"EUR\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/api/v1/currency",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"currency"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get rate for base and to",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"code\": \"USD\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/api/v1/exchange-rate?base=EUR&to=OMRr",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"exchange-rate"
+					],
+					"query": [
+						{
+							"key": "base",
+							"value": "EUR"
+						},
+						{
+							"key": "to",
+							"value": "OMRr"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

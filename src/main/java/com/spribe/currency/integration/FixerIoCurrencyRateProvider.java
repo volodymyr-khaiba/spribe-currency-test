@@ -4,6 +4,8 @@ import com.spribe.currency.dto.CurrencyRatePackDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.retry.annotation.Backoff;
+import org.springframework.retry.annotation.Retryable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponents;
@@ -23,6 +25,7 @@ public class FixerIoCurrencyRateProvider implements CurrencyRateProvider {
     private RestTemplate restTemplate;
 
     @Override
+    @Retryable(maxAttempts = 3, backoff = @Backoff(delay = 500))
     public CurrencyRatePackDto getCurrencyRates(String base) {
         log.info("Rates fetching process started for base = {}", base);
         UriComponents uri = UriComponentsBuilder.fromUriString(baseUrl)

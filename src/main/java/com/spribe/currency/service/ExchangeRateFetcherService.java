@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 public class ExchangeRateFetcherService {
 
     @Value("${default.currency.provider.code}")
-    String defaultProviderName;
+    private String defaultProviderName;
 
     private final Map<String, CurrencyRateProvider> ratesProvider;
 
@@ -66,6 +66,9 @@ public class ExchangeRateFetcherService {
     private void fetchAndStoreExchangeRatesForCurrencyAndProvider(String currency, String provider) {
         log.info("Exchange rate will be fetched for next currency = {}", currency);
         CurrencyRatePackDto ratePack = ratesProvider.get(provider).getCurrencyRates(currency);
+        if (!ratePack.getSuccess()) {
+            log.error("Rates fetching failed for base = {}", ratePack.getBase());
+        }
         rateService.saveRatesData(ratePack);
         log.info("Process of exchange rate fetching finished");
     }

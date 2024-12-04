@@ -22,7 +22,7 @@ public class CurrencyServiceImpl implements CurrencyService {
 
     @Autowired
     @Lazy
-    ExchangeRateFetcherService fetcherService;
+    private ExchangeRateFetcherService fetcherService;
 
     @Autowired
     private ObjectMapper objectMapper;

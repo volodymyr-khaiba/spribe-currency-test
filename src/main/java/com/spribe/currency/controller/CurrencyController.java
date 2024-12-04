@@ -14,7 +14,7 @@ import java.util.List;
 public class CurrencyController {
 
     @Autowired
-    CurrencyService currencyService;
+    private CurrencyService currencyService;
 
     @GetMapping("/all")
     public ResponseEntity<List<CurrencyDto>> getCurrency() {

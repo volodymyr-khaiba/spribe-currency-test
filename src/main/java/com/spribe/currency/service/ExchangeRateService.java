@@ -20,13 +20,13 @@ import java.util.Map;
 public class ExchangeRateService {
 
     @Autowired
-    ExchangeRateRepository exchangeRateRepository;
+    private ExchangeRateRepository exchangeRateRepository;
 
     @Autowired
-    ExchangeRatePackRepository exchangeRatePackRepository;
+    private ExchangeRatePackRepository exchangeRatePackRepository;
 
     @Autowired
-    ExchangeRateCache cache;
+    private ExchangeRateCache cache;
 
     public Map<String, BigDecimal> getRatesForBase(String base) {
         return cache.getRates(base);
@@ -44,6 +44,11 @@ public class ExchangeRateService {
         exchangeRatePackEntity.setSuccess(ratePackDto.getSuccess());
         exchangeRatePackEntity.setFetchDate(LocalDateTime.now());
         ExchangeRatePackEntity savedPack = exchangeRatePackRepository.save(exchangeRatePackEntity);
+
+        if (!ratePackDto.getSuccess()) {
+            log.error("Rates fetching failed for base = {} cache contains outdated data", ratePackDto.getBase());
+            return;
+        }
 
         List<ExchangeRateEntity> exchangeRateEntities = ratePackDto.getRates().entrySet()
                 .stream()

@@ -20,7 +20,7 @@ public class FixerIoCurrencyRateProvider implements CurrencyRateProvider {
     private String apiKey;
 
     @Autowired
-    RestTemplate restTemplate;
+    private RestTemplate restTemplate;
 
     @Override
     public CurrencyRatePackDto getCurrencyRates(String base) {

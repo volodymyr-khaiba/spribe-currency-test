@@ -16,7 +16,7 @@ import java.util.Map;
 public class ExchangeRateController {
 
     @Autowired
-    ExchangeRateService exchangeRateService;
+    private ExchangeRateService exchangeRateService;
 
     @GetMapping("/{currency}/rates")
     public ResponseEntity<Map<String, BigDecimal>> getCurrencyRates(@PathVariable String currency) {
